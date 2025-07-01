@@ -1,0 +1,4 @@
+# Ignore everything inside sporting-club-api that shouldn’t be committed
+sporting-club-api/.env
+sporting-club-api/node_modules
+sporting-club-api/dist
