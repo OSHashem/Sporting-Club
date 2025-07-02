@@ -1,4 +1,6 @@
-# Ignore everything inside sporting-club-api that shouldn’t be committed
-sporting-club-api/.env
-sporting-club-api/node_modules
-sporting-club-api/dist
+# Ignore environment variables
+.env
+
+# Ignore dependencies and build artifacts
+node_modules
+dist/
