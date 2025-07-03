@@ -1,14 +1,16 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { CacheModule } from '@nestjs/cache-manager';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MembersModule } from './members/members.module';
 import { SportsModule } from './sports/sports.module';
-import { SubscriptionsModule } from './subscriptions/subscriptions.module';
+// import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 
 @Module({
   imports: [
+    CacheModule.register({ isGlobal: true }), // ✅ Global cache
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -22,7 +24,7 @@ import { SubscriptionsModule } from './subscriptions/subscriptions.module';
     }),
     MembersModule,
     SportsModule,
-    SubscriptionsModule,
+    // SubscriptionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
