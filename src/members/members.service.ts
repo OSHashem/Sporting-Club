@@ -10,43 +10,48 @@ export class MembersService {
         private memberRepo: Repository<Member>,
     ) {}
     
-    create (member: Partial<Member>){
+
+    async create(member: Partial<Member>){
         const newMember = this.memberRepo.create(member);
-        return this.memberRepo.save(newMember);
+        const savedMember = await this.memberRepo.save(newMember);
+        return { savedMember, msg: 'Member created successfully' };
     }
 
     // Not required but added it to aid while testing
-    findAll(){
-        return this.memberRepo.find();
+
+    async findAll(){
+        const members = await this.memberRepo.find();
+        return { members, msg: 'All members fetched successfully' };
     }
 
-    findOne(id: number){
-        return this.memberRepo.findOne({where:{id}});
+
+    async findOne(id: number){
+        const member = await this.memberRepo.findOne({where:{id}});
+        return { member, msg: member ? 'Member found' : 'Member not found' };
     }
+
 
     async update(id: number, updated: Partial<Member>){
         await this.memberRepo.update(id,updated);
-        return this.findOne(id);
+        const updatedMember = await this.memberRepo.findOne({where:{id}});
+        return { updatedMember, msg: updatedMember ? 'Member updated successfully' : 'Member not found' };
     }
 
+
     async remove(id:number){
-        const member = await this.findOne(id);
+        const member = await this.memberRepo.findOne({where:{id}});
         if(!member)
-            return null;
+            return { data: null, msg: 'Member not found' };
         await this.memberRepo.delete(id);
-        return member;
+        return { member, msg: 'Member deleted successfully' };
     }
 
     // Added it to aid while testing
     async findFamilyMembers(id: number){
-        const member = await this.memberRepo.findOne({where: {id},
-        relations: ['familyMembers']
-    });
-
-    if (!member){
-        throw new NotFoundException('Member Not Found');
-    }
-
-    return member.familyMembers || [];
+        const member = await this.memberRepo.findOne({where: {id}, relations: ['familyMembers']});
+        if (!member){
+            return { familyMembers: [], msg: 'Member not found' };
+        }
+        return { familyMembers: member.familyMembers || [], msg: 'Family members fetched successfully' };
     }
 }

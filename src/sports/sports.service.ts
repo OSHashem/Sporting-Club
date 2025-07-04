@@ -11,31 +11,34 @@ export class SportsService {
         private sportRepo: Repository<Sport>,
     ) {}
 
-    create(sport: Partial<Sport>){
-        const newSport = this.sportRepo.create(sport)
-        return this.sportRepo.save(newSport);
+    async create(sport: Partial<Sport>){
+        const newSport = this.sportRepo.create(sport);
+        const savedSport = await this.sportRepo.save(newSport);
+        return { savedSport, msg: 'Sport created successfully' };
     }
 
-    findAll(){
-        return this.sportRepo.find();
+     async findAll(){
+        const sports = await this.sportRepo.find();
+        return { sports, msg: 'All sports fetched successfully' };
     }
 
-    findOne(id: number){
-        return this.sportRepo.findOne({where: {id}});
+    async findOne(id: number){
+        const sport = await this.sportRepo.findOne({where: {id}});
+        return { sport, msg: sport ? 'Sport found' : 'Sport not found' };
     }
 
     async update (id: number, updatedData: Partial<Sport>){
         await this.sportRepo.update(id,updatedData);
-        return this.findOne(id);
+        const updatedSport = await this.sportRepo.findOne({where: {id}});
+        return { updatedSport, msg: updatedSport ? 'Sport updated successfully' : 'Sport not found' };
     }
 
     async remove (id:number){
-        const sport = await this.findOne(id);
+        const sport = await this.sportRepo.findOne({where: {id}});
         if(!sport)
-            return null;
+            return { sport: null, msg: 'Sport not found' };
         await this.sportRepo.delete(id);
-        return sport;
+        return { sport, msg: 'Sport deleted successfully' };
     }
-
 
 }
