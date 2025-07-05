@@ -67,7 +67,7 @@ export class MembersService {
     // Check if the member does not exist
     if (!member) return { data: null, msg: 'Member not found' };
 
-    // Delete all subscriptions of this member
+    // Delete all subscriptions of the member that will be deleted
     await this.subscriptionRepo.delete({ member: { id } });
 
     await this.memberRepo.delete(id);
