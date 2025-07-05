@@ -8,6 +8,7 @@ import { Repository } from 'typeorm';
 import { Subscription } from 'src/subscriptions/entities/subscription.entity';
 import { Member } from 'src/members/entities/member.entity';
 import { Sport } from 'src/sports/entities/sport.entity';
+import { SubscribeDto } from './dto/subscribe.dto';
 
 @Injectable()
 export class SubscriptionsService {
@@ -22,12 +23,10 @@ export class SubscriptionsService {
     private readonly sportRepo: Repository<Sport>,
   ) {}
 
-  // Member Subscribe to a Sport
-  async subscribe(
-    memberId: number,
-    sportId: number,
-    type: 'group' | 'private',
-  ) {
+  // Member Subscribe to a Sport with input validation
+  async subscribe(dto: SubscribeDto) {
+    const { memberId, sportId, type } = dto;
+
     const member = await this.memberRepo.findOne({ where: { id: memberId } });
     const sport = await this.sportRepo.findOne({ where: { id: sportId } });
 
@@ -50,10 +49,11 @@ export class SubscriptionsService {
     return { savedSubscription, msg: 'Subscription created successfully' };
   }
 
-  // Member unsub from sport
+  // Member unsub from sport with input validation
   async unsubscribe(subscriptionId: number) {
     const found = await this.subscriptionRepo.findOne({
       where: { id: subscriptionId },
+      relations: ['member', 'sport'],
     });
     if (!found) {
       throw new NotFoundException('Subscription not found');

@@ -15,7 +15,7 @@ export class Subscription {
     @ManyToOne(()=> Member, {eager: true})
     member: Member;
 
-    @ManyToOne(()=> Sport, {eager: true})
+    @ManyToOne(()=> Sport, {eager: true, onDelete: 'CASCADE'})
     sport: Sport;
 
 }

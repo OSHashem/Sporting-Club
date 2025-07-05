@@ -7,6 +7,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Member } from './entities/member.entity';
 import { Subscription } from 'src/subscriptions/entities/subscription.entity';
+import { CreateMemberDto } from './dto/create-member.dto';
+import { UpdateMemberDto } from './dto/update-member.dto'; 
 
 @Injectable()
 export class MembersService {
@@ -19,7 +21,7 @@ export class MembersService {
   ) {}
 
   // Create a new member
-  async create(member: Partial<Member>) {
+  async create(member: CreateMemberDto) {
     // assign today’s date if it's not already given
     if (!member.subscriptionDate) {
       member.subscriptionDate = new Date().toISOString().split('T')[0]; // format: YYYY-MM-DD
@@ -46,7 +48,7 @@ export class MembersService {
   }
 
   // Update a member by ID
-  async update(id: number, updated: Partial<Member>) {
+  async update(id: number, updated: UpdateMemberDto) {
     await this.memberRepo.update(id, updated);
     const updatedMember = await this.memberRepo.findOne({ where: { id } });
     return {

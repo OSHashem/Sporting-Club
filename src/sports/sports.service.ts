@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Sport } from './entities/sport.entity';
 import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager';
+import { createSportDto } from './dto/create-sport.dto';
+import { UpdateSportDto } from './dto/update-sport.dto';
 
 @Injectable()
 export class SportsService {
@@ -14,7 +16,7 @@ export class SportsService {
   ) {}
 
   // Create New Sport
-  async create(sport: Partial<Sport>) {
+  async create(sport: createSportDto) {
     const newSport = this.sportRepo.create(sport);
     const savedSport = await this.sportRepo.save(newSport);
     await this.cacheManager.del('all_sports'); // clear cache
@@ -45,7 +47,7 @@ export class SportsService {
   }
 
   // Update Sport By Id
-  async update(id: number, updatedData: Partial<Sport>) {
+  async update(id: number, updatedData: UpdateSportDto) {
     await this.sportRepo.update(id, updatedData);
     const updatedSport = await this.sportRepo.findOne({ where: { id } });
     await this.cacheManager.del('all_sports'); // clear cache

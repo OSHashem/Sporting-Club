@@ -6,17 +6,22 @@ import {
   Body,
   Patch,
   Delete,
+  ValidationPipe,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { MembersService } from './members.service';
 import { Member } from './entities/member.entity';
+import { CreateMemberDto } from './dto/create-member.dto';
+import { UpdateMemberDto } from './dto/update-member.dto';
 
 @Controller('members')
 export class MembersController {
   constructor(private readonly membersService: MembersService) {}
 
   @Post()
-  create(@Body() member: Partial<Member>) {
-    return this.membersService.create(member);
+  // Create a new member with input validation
+  create(@Body() createdDto: CreateMemberDto) {
+    return this.membersService.create(createdDto);
   }
 
   @Get()
@@ -30,8 +35,9 @@ export class MembersController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updated: Partial<Member>) {
-    return this.membersService.update(+id, updated);
+  // Update a member by ID with input validation
+  update(@Param('id') id: string, @Body() updatedDto: UpdateMemberDto) {
+    return this.membersService.update(+id, updatedDto);
   }
 
   @Delete(':id')

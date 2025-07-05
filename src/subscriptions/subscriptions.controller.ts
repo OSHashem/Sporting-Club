@@ -1,17 +1,15 @@
 import { Controller, Post, Delete, Param, Body, Get } from '@nestjs/common';
 import { SubscriptionsService } from './subscriptions.service';
+import { SubscribeDto } from './dto/subscribe.dto';
 
 @Controller('subscriptions')
 export class SubscriptionsController {
   constructor(private readonly subscriptionsService: SubscriptionsService) {}
 
   @Post()
-  create(
-    @Body('memberId') memberId: number,
-    @Body('sportId') sportId: number,
-    @Body('type') type: 'group' | 'private',
-  ) {
-    return this.subscriptionsService.subscribe(memberId, sportId, type);
+  // Member Subscribe to a Sport With a input validation
+  create(@Body() dto: SubscribeDto) {
+    return this.subscriptionsService.subscribe(dto);
   }
 
   @Delete(':id')

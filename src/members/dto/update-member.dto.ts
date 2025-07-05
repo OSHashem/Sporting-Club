@@ -1,17 +1,20 @@
 import { IsString, IsDateString, IsIn, IsOptional } from 'class-validator';
-
-export class CreateMemberDto {
+export class UpdateMemberDto {
+  @IsOptional()
   @IsString()
-  firstName: string;
+  firstName?: string;
 
+  @IsOptional()
   @IsString()
-  lastName: string;
+  lastName?: string;
 
+  @IsOptional()
   @IsIn(['male', 'female'])
-  gender: 'male' | 'female';
+  gender?: 'male' | 'female';
 
+  @IsOptional()
   @IsDateString()
-  birthDate: string;
+  birthDate?: string;
 
   @IsOptional()
   @IsDateString()

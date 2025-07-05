@@ -1,13 +1,15 @@
 import { Controller, Get, Post, Body, Param, Patch, Delete } from '@nestjs/common';
 import { SportsService } from './sports.service';
 import { Sport } from './entities/sport.entity';
+import { createSportDto } from './dto/create-sport.dto';
+import { UpdateSportDto } from './dto/update-sport.dto';
 
 @Controller('sports')
 export class SportsController {
     constructor(private readonly sportsService: SportsService) {}
 
     @Post()
-    create(@Body() sport: Partial<Sport>){
+    create(@Body() sport: createSportDto){
         return this.sportsService.create(sport)
     }
 
@@ -22,7 +24,7 @@ export class SportsController {
     }
 
     @Patch(':id')
-    update(@Param('id') id: string, @Body() updated: Partial<Sport>){   
+    update(@Param('id') id: string, @Body() updated: UpdateSportDto){   
         return this.sportsService.update(+id,updated);
     }
 
