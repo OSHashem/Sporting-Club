@@ -14,16 +14,17 @@ export class Member {
     @Column()
     gender: 'male' | 'female';
     
-    @Column({ type: 'date' })
+    @Column({ type: 'date'})
     birthDate: string;
     
-    @Column({ type: 'date' })
+    // Column to store the date when the member subscribed to the club
+    @Column({ type: 'date', nullable: true })
     subscriptionDate: string;
 
-    @ManyToOne(()=> Member, (member) => member.familyMembers, {nullable: true})
+    @ManyToOne(()=> Member, (member) => member.familyMembers, {nullable: true, onDelete: 'SET NULL'})
     @JoinColumn({name: 'mainMemberId'})
     mainMember?: Member;
 
-    @OneToMany(()=> Member, (member) => member.mainMember)
+    @OneToMany(()=> Member, (member) => member.mainMember, {nullable:true ,cascade: true})
     familyMembers?: Member[];
 }

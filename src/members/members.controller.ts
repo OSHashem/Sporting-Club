@@ -40,7 +40,15 @@ export class MembersController {
   }
 
   @Get(':id/family')
-  getFamily(@Param('id') id: string){
+  getFamily(@Param('id') id: string) {
     return this.membersService.findFamilyMembers(+id);
+  }
+
+  @Patch('/:childId/link/:mainId')
+  async linkFamily(
+    @Param('childId') childId: string,
+    @Param('mainId') mainId: string,
+  ) {
+    return this.membersService.linkFamilyMember(+childId, +mainId);
   }
 }

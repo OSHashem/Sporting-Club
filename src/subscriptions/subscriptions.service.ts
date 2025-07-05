@@ -22,6 +22,7 @@ export class SubscriptionsService {
     private readonly sportRepo: Repository<Sport>,
   ) {}
 
+  // Member Subscribe to a Sport
   async subscribe(
     memberId: number,
     sportId: number,
@@ -30,6 +31,7 @@ export class SubscriptionsService {
     const member = await this.memberRepo.findOne({ where: { id: memberId } });
     const sport = await this.sportRepo.findOne({ where: { id: sportId } });
 
+    // Checks if either no member or sport with such with Id is found
     if (!member || !sport) {
       throw new NotFoundException('Member or Sport not found');
     }
@@ -48,6 +50,7 @@ export class SubscriptionsService {
     return { savedSubscription, msg: 'Subscription created successfully' };
   }
 
+  // Member unsub from sport
   async unsubscribe(subscriptionId: number) {
     const found = await this.subscriptionRepo.findOne({
       where: { id: subscriptionId },
@@ -60,7 +63,7 @@ export class SubscriptionsService {
     return { found, msg: 'Unsubscribed successfully' };
   }
 
-  // Added both to aid in testing 
+  // Added both to aid in testing
   async findAll() {
     const subs = await this.subscriptionRepo.find();
     return { subs, msg: 'All subscriptions fetched successfully' };
