@@ -50,3 +50,46 @@ npm run start:dev
 # For Production
 npm run start
 ```
+
+## 📘 API Summary
+
+Below is a summary of the available RESTful endpoints grouped by module:
+
+---
+
+### 🧍 Members
+
+| Method | Endpoint              | Description                              |
+|--------|-----------------------|------------------------------------------|
+| GET    | `/members`            | Get all members                          |
+| GET    | `/members/:id`        | Get a member by ID                       |
+| POST   | `/members`            | Create a new member                      |
+| PATCH  | `/members/:id`        | Update an existing member                |
+| DELETE | `/members/:id`        | Delete a member and their subscriptions  |
+| GET    | `/members/:id/family` | Get family members of a main member      |
+| POST   | `/members/:childId/link/:parentId`       | Link a child member to a main member     |
+
+---
+
+### 🏆 Sports
+
+| Method | Endpoint      | Description                     |
+|--------|---------------|---------------------------------|
+| GET    | `/sports`     | Get all sports (cached)         |
+| GET    | `/sports/:id` | Get a specific sport by ID      |
+| POST   | `/sports`     | Create a new sport              |
+| PATCH  | `/sports/:id` | Update a sport                  |
+| DELETE | `/sports/:id` | Delete a sport                  |
+
+---
+
+### 📝 Subscriptions
+
+| Method | Endpoint            | Description                                |
+|--------|---------------------|--------------------------------------------|
+| GET    | `/subscriptions`    | Get all subscriptions                      |
+| GET    | `/subscriptions/:id`| Get a specific subscription by ID          |
+| POST   | `/subscriptions`    | Subscribe a member to a sport              |
+| DELETE | `/subscriptions/:id`| Unsubscribe from a sport by subscription ID|
+
+---
