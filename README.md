@@ -3,6 +3,28 @@ This project is a backend API built with NestJS and TypeORM, designed to manage 
 
 👉 This project was completed as part of the application process for a backend internship, showcasing my skills in building robust APIs with proper validation, error handling, database design, and performance optimization.
 
+## ✨ Features
+
+- 👥 **Members**
+  - CRUD operations with parent–child family relationships  
+  - Auto-assigns subscription date if missing  
+  - Deleting a main member also removes family links & subscriptions  
+
+- 🏀 **Sports**
+  - Full CRUD support  
+  - Caching for faster reads  
+  - Gender restrictions: `male`, `female`, or `mix`  
+
+- 📌 **Subscriptions**
+  - Subscribe/unsubscribe members to sports  
+  - Prevents duplicates (DB constraint)  
+  - Types supported: `group` | `private`  
+
+- ✅ **Validation & Integrity**
+  - `class-validator` for input validation  
+  - Friendly error messages for invalid data  
+  - Auto-cleans related data (e.g., subscriptions) on deletion 
+
 
 ## 🛠 Technologies Used
 
