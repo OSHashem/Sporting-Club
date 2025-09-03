@@ -1,4 +1,7 @@
-# Sporting-Club
+# Sporting Club Management System
+This project is a backend API built with NestJS and TypeORM, designed to manage a sporting club's core operations. It handles members, their subscriptions to sports, family relationships, and integrates performance optimizations like caching and input validation. It's designed to be scalable, maintainable, and efficient, suitable for real-world mobile and web applications.
+
+👉 This project was completed as part of the application process for a backend internship, showcasing my skills in building robust APIs with proper validation, error handling, database design, and performance optimization.
 
 
 ## 🛠 Technologies Used
